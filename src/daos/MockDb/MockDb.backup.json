@@ -1,0 +1,19 @@
+{
+  "users": [
+    {
+      "name": "Sean Maxwell",
+      "email": "sean.maxwell@gmail.com",
+      "_id": 159123164363
+    },
+    {
+      "name": "Gordan Freeman",
+      "email": "gordan.freeman@halflife.com",
+      "_id": 906524522143
+    },
+    {
+      "name": "John Smith",
+      "email": "jsmith@yahoo.com",
+      "_id": 357437875835
+    }
+  ]
+}
