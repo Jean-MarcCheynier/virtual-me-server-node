@@ -4,7 +4,7 @@ import UserSchema from '../../schemas/User'
 
 
 export interface IUserDao {
-    getOne: (email: string) => Promise<IUser | null>;
+    getOne: (query: any) => Promise<IUser | null>;
     getAll: () => Promise<IUser[]>;
     add: (user: IUser) => Promise<IUser | null>;
     update: (user: IUser) => Promise<IUser | null>;

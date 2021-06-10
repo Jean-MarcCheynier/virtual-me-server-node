@@ -14,8 +14,10 @@ import 'express-async-errors';
 import  passport from 'passport'
 import { Strategy, ExtractJwt } from 'passport-jwt'
 
-import BaseRouter from './routes';
+import baseRouter, { authRouter } from './routes';
 import logger from '@shared/Logger';
+import UserDao, {IUserDao} from './daos/User/UserDao';
+import { IUser } from './entities/User';
 
 const app = express();
 
@@ -39,7 +41,28 @@ const db = mongoose.connection
 db.on('error', () => logger.err('connection error:'))
 db.once('open', () => logger.info('Connected to MongoDB'))
 
+/************************************************************************************
+ *                              Set passport settings
+ ***********************************************************************************/
+const userDao: IUserDao = new UserDao();
 
+const opts = {
+    jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('bearer'),
+    secretOrKey: process.env.JWT_SECRET
+    // audience = 'yoursite.net';
+}
+passport.use(new Strategy(opts, (jwtPayload: any, done: (err: any, user?: IUser) => boolean) => {
+    userDao.getOne({ _id: jwtPayload._id })
+        .then((user: any) => {
+            done(null, user)
+            return true
+        })
+        .catch((error: any) => {
+            // console.log(error);
+            done(error)
+            return false
+        })
+}))
 
 
 /************************************************************************************
@@ -62,7 +85,10 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // Add APIs
-app.use('/api', BaseRouter);
+
+app.use('/api/auth', authRouter)
+app.all('/api/*', passport.authenticate('jwt', { session: false }))
+app.use('/api', baseRouter);
 
 // Print API errors
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -72,32 +98,6 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
         error: err.message,
     });
 });
-
-/************************************************************************************
- *                              Set passport settings
- ***********************************************************************************/
-/* const UserService = require('../services/UserService')
-
-
-const opts = {
-    jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('bearer'),
-    secretOrKey: process.env.JWT_SECRET
-    // audience = 'yoursite.net';
-}
-passport.use(new Strategy(opts, (jwtPayload: any, done: Function) => {
-    UserService.getUser(jwtPayload._id)
-    .then((user: any) => {
-        done(null, user)
-        return true
-    })
-    .catch((error: any) => {
-        // console.log(error);
-        done(error, false)
-        return false
-    })
-})) 
-*/
-
 
 
 

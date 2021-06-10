@@ -4,10 +4,8 @@ import { signin, signup } from './Auth';
 import { getAllUsers, addOneUser, updateOneUser, deleteOneUser } from './Users';
 import { dialog } from './Bot';
 
-
-
 // Auth route
-const authRouter = Router();
+export const authRouter = Router();
 authRouter.post('/signin', signin);
 authRouter.post('/signup', signup);
 
@@ -18,15 +16,13 @@ userRouter.post('/', addOneUser);
 userRouter.put('/', updateOneUser);
 userRouter.delete('/:id', deleteOneUser);
 
-// bot-route
+// Bot-route
 const botRouter = Router();
 botRouter.get('/dialog', dialog);
-
-
 
 // Export the base-router
 const baseRouter = Router();
 baseRouter
-  .use('/auth', authRouter)
-  .use('/user', userRouter);
+  .use('/user', userRouter)
+  .use('/bot', botRouter);
 export default baseRouter;
