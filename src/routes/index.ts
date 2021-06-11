@@ -18,7 +18,7 @@ userRouter.delete('/:id', deleteOneUser);
 
 // Bot-route
 const botRouter = Router();
-botRouter.get('/dialog', dialog);
+botRouter.post('/dialog', dialog);
 
 // Export the base-router
 const baseRouter = Router();

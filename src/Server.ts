@@ -16,8 +16,9 @@ import { Strategy, ExtractJwt } from 'passport-jwt'
 
 import baseRouter, { authRouter } from './routes';
 import logger from '@shared/Logger';
-import UserDao, {IUserDao} from './daos/User/UserDao';
+import UserDao, { IUserDao } from './daos/User/UserDao';
 import { IUser } from './entities/User';
+import { SAPCAI } from './services/SAPCAI';
 
 const app = express();
 
@@ -40,6 +41,13 @@ mongoose.connect(mongoURI, dbOptions)
 const db = mongoose.connection
 db.on('error', () => logger.err('connection error:'))
 db.once('open', () => logger.info('Connected to MongoDB'))
+
+
+/************************************************************************************
+ *                              Serve front-end content
+ ***********************************************************************************/
+SAPCAI.getToken()
+
 
 /************************************************************************************
  *                              Set passport settings

@@ -1,6 +1,7 @@
 import StatusCodes from 'http-status-codes';
 import { Request, Response } from 'express';
 import { paramMissingError } from '@shared/constants';
+import { v4 as uuidv4 } from 'uuid';
 import jwt from 'jsonwebtoken';
 
 import UserDao from '@daos/User/UserDao';
@@ -37,6 +38,12 @@ export async function signin(req: Request, res: Response) {
   if (user !== null) {
     user.comparePassword(password)
       .then((user: IUserDocument) => {
+        if (!user.session || !user.session.conversation) {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+          const conversation_id: string = uuidv4()
+          user.session = { ...user.session, conversation: { conversation_id: conversation_id } }
+          user.save();
+        }
         const JWTSecret: string = process.env.JWT_SECRET || 'oh-my'
         const token = jwt.sign(user.toObject(), JWTSecret, { expiresIn: '10d' })
         const loggedIn: any = user.toJSON()
@@ -63,10 +70,10 @@ export async function signin(req: Request, res: Response) {
  */
 export async function signup(req: Request, res: Response) {
 
-  const { login, password } = req.body;
+  const { login, password, email } = req.body;
   const newUser: IUser = {
     name: login,
-    email: 'defaul@email.com',
+    email: email,
     role: Role.user,
     login: login,
     password: password

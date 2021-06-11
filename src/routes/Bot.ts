@@ -1,10 +1,12 @@
 import StatusCodes from 'http-status-codes';
 import { Request, Response } from 'express';
 import { paramMissingError } from '@shared/constants';
+import { SAPCAI } from '../services/SAPCAI';
+import { IUser } from '@entities/User';
 
 
 
-const { BAD_REQUEST, CREATED, OK } = StatusCodes;
+const { BAD_REQUEST, CREATED, OK, FORBIDDEN } = StatusCodes;
 
 
 
@@ -15,6 +17,14 @@ const { BAD_REQUEST, CREATED, OK } = StatusCodes;
  * @param res 
  * @returns 
  */
-export function dialog(req: Request, res: Response) {
-  return res.status(OK).end();
+export async function dialog(req: Request, res: Response) {
+  const { message } = req.body;
+  const user: any = req.user;
+  if (user && user.session && user.session.conversation) {
+    const { conversation_id } = user.session.conversation
+    const response = await SAPCAI.dialog(message, conversation_id);
+    return res.status(OK).json(response);
+  } else {
+    return res.status(FORBIDDEN).end();
+  }
 }

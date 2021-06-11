@@ -1,5 +1,5 @@
 export interface ISapCaiSession {
-  token: {
+  token?: {
     access_token: string,
     token_type: string,
     expires_in: number,
@@ -7,6 +7,6 @@ export interface ISapCaiSession {
     jti: string
   },
   conversation: {
-    conversation_id: number;
+    conversation_id: string;
   }
 }

@@ -1,5 +1,5 @@
 import { IUser } from '@entities/User';
-import UserSchema from '../../schemas/User'
+import User from '../../schemas/User'
 
 
 
@@ -18,7 +18,7 @@ class UserDao implements IUserDao {
      * @param email
      */
     public getOne(query: any): Promise<IUser | null> {
-        return UserSchema.findOne(query).exec()
+        return User.findOne(query).exec()
     }
 
 
@@ -26,7 +26,7 @@ class UserDao implements IUserDao {
      *
      */
     public getAll(): Promise<IUser[]> {
-        return UserSchema.find().exec()
+        return User.find().exec()
     }
 
 
@@ -35,7 +35,7 @@ class UserDao implements IUserDao {
      * @param user
      */
     public add(user: IUser): Promise<IUser | null> {
-        const newUser = new UserSchema(user)
+        const newUser = new User(user)
 
         return newUser.save()
     }
@@ -46,7 +46,7 @@ class UserDao implements IUserDao {
      * @param user
      */
     public async update(user: IUser): Promise<any | null> {
-        return UserSchema.updateOne({ _id: user._id }, { ...user }).exec()
+        return User.updateOne({ _id: user._id }, { ...user }).exec()
     }
 
 
@@ -55,7 +55,7 @@ class UserDao implements IUserDao {
      * @param id
      */
     public async delete(id: any): Promise<any> {
-        return UserSchema.deleteOne({_id: id}).exec()
+        return User.deleteOne({_id: id}).exec()
     }
 }
 
