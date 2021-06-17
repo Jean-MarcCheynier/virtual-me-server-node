@@ -3,6 +3,8 @@ import morgan from 'morgan';
 import path from 'path';
 import helmet from 'helmet';
 
+import { createServer } from "http";
+import { Server, Socket } from "socket.io";
 import mongoose from 'mongoose';
 import promise from 'bluebird';
 
@@ -14,15 +16,35 @@ import 'express-async-errors';
 import  passport from 'passport'
 import { Strategy, ExtractJwt } from 'passport-jwt'
 
-import baseRouter, { authRouter } from './routes';
+import baseRouter, { authRouter, connectorRouter } from './routes';
 import logger from '@shared/Logger';
 import UserDao, { IUserDao } from './daos/User/UserDao';
 import { IUser } from './entities/User';
 import { SAPCAI } from './services/SAPCAI';
 
 const app = express();
+const httpServer = createServer(app);
 
 const { BAD_REQUEST } = StatusCodes;
+
+
+
+/************************************************************************************
+ *                              Set Socke.io Config
+ ***********************************************************************************/
+
+const options = {
+    cors: {
+        origin: "*",//process.env.CLIENT_URL
+        //methods: ['GET', 'POST']
+    }
+};
+export const io = new Server(httpServer, options);
+
+io.on("connection", (socket: Socket) => {
+    socket.emit('test','Hello!')
+});
+
 
 /************************************************************************************
  *                              Set Mongoose Config
@@ -95,6 +117,7 @@ if (process.env.NODE_ENV === 'production') {
 // Add APIs
 
 app.use('/api/auth', authRouter)
+app.use('/api/connector', connectorRouter)
 app.all('/api/*', passport.authenticate('jwt', { session: false }))
 app.use('/api', baseRouter);
 
@@ -121,5 +144,6 @@ app.get('*', (req: Request, res: Response) => {
     res.sendFile('index.html', {root: viewsDir});
 });
 
+
 // Export express instance
-export default app;
+export default httpServer;

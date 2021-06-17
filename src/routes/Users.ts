@@ -74,3 +74,16 @@ export async function deleteOneUser(req: Request, res: Response) {
     await userDao.delete(Number(id));
     return res.status(OK).end();
 }
+
+/**
+ * Get connected user.
+ *
+ * @param req
+ * @param res
+ * @returns
+ */
+export async function getMe(req: Request, res: Response) {
+    const user: any = req.user
+    await userDao.getOne({ _id: user._id });
+    return res.status(OK).end();
+}

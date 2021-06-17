@@ -1,8 +1,7 @@
 import StatusCodes from 'http-status-codes';
 import { Request, Response } from 'express';
-import { paramMissingError } from '@shared/constants';
 import { SAPCAI } from '../services/SAPCAI';
-import { IUser } from '@entities/User';
+
 
 
 
@@ -23,8 +22,9 @@ export async function dialog(req: Request, res: Response) {
   if (user && user.session && user.session.conversation) {
     const { conversation_id } = user.session.conversation
     const response = await SAPCAI.dialog(message, conversation_id);
-    return res.status(OK).json(response);
+    console.log(response);
+    res.status(OK).json(response);
   } else {
-    return res.status(FORBIDDEN).end();
+    res.status(FORBIDDEN).end();
   }
 }

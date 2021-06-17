@@ -1,4 +1,4 @@
-import { IMessage, TextMessage } from '@entities/SAP_CAI/Message';
+import { IMessage, Sender, TextMessage, IDialogResponse, DialogResponse } from '@entities/API/bot';
 import { Request } from '@entities/SAP_CAI/Request';
 import { IResponse } from '@entities/SAP_CAI/Response';
 import logger from '@shared/Logger';
@@ -37,9 +37,8 @@ export class SAPCAI {
     })
   }
   
-  static async dialog(message: string, conversation_id: string): Promise<IMessage<any>[]> {
-    const textMessage = new TextMessage(message);
-    const request = new Request(textMessage, conversation_id);
+  static async dialog(message: IMessage<any>, conversation_id: string): Promise<IDialogResponse> {
+    const request = new Request(message, conversation_id);
     const tokenDao = new TokenDao();
     const access = await tokenDao.getToken();
     if (access) {
@@ -56,19 +55,19 @@ export class SAPCAI {
       })
       .then(r => {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        logger.info("Youhou")
-        const response: IResponse = r.data;
-        return response.results.messages
+        const SAPCAIResponse: IResponse = r.data;
+        const APIResponse: IDialogResponse = DialogResponse.fromSAPCAI(SAPCAIResponse)
+        return APIResponse
       })
       .catch(e => {
         logger.err(e);
         const errorMessage: IMessage<string> = new TextMessage("Unable to access the bot");
-        return [errorMessage]
+        return { messages: [errorMessage] }
       })
     } else {
       logger.err("No bot access token present in DB")
       const errorMessage: IMessage<string> = new TextMessage("Unable to access the bot");
-      return [errorMessage]
+      return { messages: [errorMessage] }
     }
 
   }

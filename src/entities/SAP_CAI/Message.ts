@@ -4,7 +4,7 @@ enum MessageType {
 
 export interface IMessage<T> {
   type: MessageType
-  content?: T
+  content: T
   markdown?: any
   delay?: any
 }
