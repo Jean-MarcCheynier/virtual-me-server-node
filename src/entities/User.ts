@@ -1,5 +1,10 @@
 import { Role } from "./Role";
-import { ISapCaiSession } from './SAP_CAI/Session';
+
+export interface IUserSapCaiSession {
+    conversation: {
+        conversation_id: string;
+    }
+}
 
 export interface IUser {
     _id?: any;
@@ -8,7 +13,7 @@ export interface IUser {
     role: Role;
     login: string;
     password?: string;
-    session?: ISapCaiSession;
+    session?: IUserSapCaiSession;
 }
 
 class User implements IUser {

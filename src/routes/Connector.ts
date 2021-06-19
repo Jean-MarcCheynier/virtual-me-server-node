@@ -11,7 +11,6 @@ import { io } from '@server';
  * @returns 
  */
 export function action(req: Request, res: Response) {
-  console.log("CALLED");
   io.emit("test", "coucou");
   return res.json({
     "replies": [

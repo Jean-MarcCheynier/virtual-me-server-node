@@ -62,7 +62,7 @@ export async function signin(req: Request, res: Response) {
 
 
 /**
- * signin
+ * signup
  * 
  * @param req 
  * @param res 
@@ -74,7 +74,7 @@ export async function signup(req: Request, res: Response) {
   const newUser: IUser = {
     name: login,
     email: email,
-    role: Role.user,
+    role: Role.USER,
     login: login,
     password: password
   }

@@ -1,3 +1,7 @@
+
+/**
+ * Message send from the server App to SAP CAI API
+ */
 enum MessageType {
   text='text'
 }
