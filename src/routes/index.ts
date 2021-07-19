@@ -1,7 +1,12 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { Router } from 'express';
 import { signin, signup } from './Auth';
-import { getAllUsers, addOneUser, updateOneUser, deleteOneUser, getMe } from './Users';
+import {
+  getAllUsers, addOneUser,
+  updateOneUser, deleteOneUser,
+  getMe, getConnectedUsers
+} from './Users';
+import { getCv, getAllCv, updateCv, deleteCv, addCv } from './Cv';
 import { dialog } from './Bot';
 import { action } from './Connector';
 
@@ -18,6 +23,7 @@ connectorRouter.post('/action', action);
 const userRouter = Router();
 userRouter.get('/', getAllUsers);
 userRouter.get('/me', getMe);
+userRouter.get('/connected', getConnectedUsers);
 userRouter.post('/', addOneUser);
 userRouter.put('/', updateOneUser);
 userRouter.delete('/:id', deleteOneUser);
@@ -26,10 +32,19 @@ userRouter.delete('/:id', deleteOneUser);
 const botRouter = Router();
 botRouter.post('/dialog', dialog);
 
+// CV-route
+const cvRouter = Router();
+cvRouter.get('/', getAllCv);
+cvRouter.get('/:id', getCv);
+cvRouter.post('/', addCv);
+cvRouter.put('/', updateCv);
+
+
 // Export the base-router
 const baseRouter = Router();
 baseRouter
   .use('/user', userRouter)
   .use('/bot', botRouter)
+  .use('/cv', cvRouter)
 
 export default baseRouter;

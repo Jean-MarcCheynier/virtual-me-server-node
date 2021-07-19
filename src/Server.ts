@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
@@ -44,7 +45,7 @@ logger.info('The value of PORT is:' + process.env.MONGO_URI);
 const mongoURI: string = process.env.MONGO_URI || "";
 mongoose.connect(mongoURI, dbOptions)
 const db = mongoose.connection
-db.on('error', () => logger.err('connection error:'))
+db.on('error', () => logger.error('connection error:'))
 db.once('open', () => logger.info('Connected to MongoDB'))
 
 
@@ -61,38 +62,25 @@ const userDao: IUserDao = new UserDao();
 
 passport.use(new Strategy({
     jwtFromRequest: (request: any) => {
-        let token = null;
-        try {
-            console.log("try to find the token as string");
-            token = ExtractJwt.fromAuthHeaderWithScheme('bearer')(request)
-        } catch (e) {
-            console.log("not found");
+        // Case request from http
+        let token = ExtractJwt.fromAuthHeaderWithScheme('bearer')(request)
+        if (token) {
+            return token;
         }
-        if (!token) {
-            console.log("try to find it in auth arg");
-            if (request.auth) {
-                
-                token = request.auth.token;
-            }
-        } else {
-            console.log("Token found in auth header");
-        }
-        console.log(token);
-        return token
+        // Case request from ws
+        token = request.auth.token;
+            return token
     },
     secretOrKey: process.env.JWT_SECRET
     // audience = 'yoursite.net';
 },
 (jwtPayload: any, done: (err: any, user?: IUser) => boolean) => {
-    console.log("passport")
     userDao.getOne({ _id: jwtPayload._id })
         .then((user: any) => {
-            console.log("Passport Success")
             done(null, user)
             return true
         })
         .catch((error: any) => {
-            console.log("Passport Error")
             done(error)
             return false
         })
@@ -101,17 +89,8 @@ passport.use(new Strategy({
 /************************************************************************************
  *                              Set Socket.io Config
  ***********************************************************************************/
-// eslint-disable-next-line @typescript-eslint/no-unsafe-return
-// eslint-disable-next-line @typescript-eslint/no-unsafe-call
-const wrap = (middleware: any) => (socket: any, next: any) => {
-    
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-    if (socket.handshake && socket.handshake.auth) {
-        socket.request.auth = socket.handshake.auth;
-    }
-    
-    return middleware(socket.request, {}, next);
-}
+
+const wrap = (middleware: any) => (socket: any, next: any) => middleware(socket.request, {}, next);
 
 const options = {
     cors: {
@@ -120,19 +99,38 @@ const options = {
     }
 };
 export const io = new Server(httpServer, options);
-//io.use(wrap(myMiddleWare));
-
-io.use(wrap(passport.authenticate(['jwt'], (data, err) => {
-    console.log("CB passport")
-    console.log(data)
-    console.log(err)
-    //console.log(args)
-})));
-
-io.on("connection", (socket) => {
-    // ...
-    console.log("Connected")
+io.use((socket: any, next) => {
+    logger.debug("socket")
+    if (socket.handshake && socket.handshake.auth) {
+        socket.request.auth = socket.handshake.auth;
+    }
+    next()
+})
+io.use(wrap(passport.initialize()));
+io.use(wrap(passport.authenticate('jwt', { session: false })));
+io.use((socket: any, next) => {
+    if (socket.request.user) {
+        logger.info(socket.request.user)
+        next();
+    } else {
+        logger.error("Unauthorized")
+        next(new Error("unauthorized"))
+    }
 });
+
+io.on("connection", (socket: any) => {
+    const user: IUser = socket.request.user;
+    const socketId = socket.id;
+    logger.info(socketId),
+        userDao.updateSocketId(user, socketId)
+    //Remove socketId on disconnect
+    socket.on('disconnect', function (socket: any) {
+        const socketId: string = socket.id
+        logger.debug(`Disconnected : ${socketId}`)
+        userDao.updateSocketId(user, "")
+    });
+});
+
 
 /************************************************************************************
  *                              Set basic express settings
@@ -162,7 +160,7 @@ app.use('/api', baseRouter);
 // Print API errors
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-    logger.err(err, true);
+    logger.error(err);
     return res.status(BAD_REQUEST).json({
         error: err.message,
     });

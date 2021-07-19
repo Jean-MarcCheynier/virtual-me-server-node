@@ -1,0 +1,10 @@
+[31merror[39m: User validation failed: email: Path `email` is required. {"errors":{"email":{"name":"ValidatorError","message":"Path `email` is required.","properties":{"message":"Path `email` is required.","type":"required","path":"email"},"kind":"required","path":"email"}},"_message":"User validation failed"}
+[31merror[39m: login failed
+[31merror[39m: Cannot read property 'token' of undefined
+[31merror[39m: Cannot read property 'token' of undefined
+[31merror[39m: Cannot read property 'token' of undefined
+[31merror[39m: Cannot read property 'token' of undefined
+[31merror[39m: Cannot read property 'token' of undefined
+[31merror[39m: Cannot read property 'token' of undefined
+[31merror[39m: Cv validation failed: skills.0.type: `Programming` is not a valid enum value for path `type`. {"errors":{"skills.0.type":{"name":"ValidatorError","message":"`Programming` is not a valid enum value for path `type`.","properties":{"message":"`Programming` is not a valid enum value for path `type`.","type":"enum","enumValues":["technical","methodology","software","language"],"path":"type","value":"Programming"},"kind":"enum","path":"type","value":"Programming"}},"_message":"Cv validation failed"}
+[31merror[39m: Cv validation failed: skills.0.type: `Programming` is not a valid enum value for path `type`. {"errors":{"skills.0.type":{"name":"ValidatorError","message":"`Programming` is not a valid enum value for path `type`.","properties":{"message":"`Programming` is not a valid enum value for path `type`.","type":"enum","enumValues":["programming","technical","methodology","software","language"],"path":"type","value":"Programming"},"kind":"enum","path":"type","value":"Programming"}},"_message":"Cv validation failed"}

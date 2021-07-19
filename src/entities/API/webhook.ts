@@ -1,0 +1,19 @@
+import { IMessage } from "./bot"
+
+export interface IActionWebHook {
+  convId: string,
+  actionCode: ActionCode,
+  content: any
+};
+
+export interface IWebHookResponseBody {
+  replies: IMessage<any>[],
+  conversation: {
+    language: string,
+    memory: any
+  }
+}
+
+export enum ActionCode {
+  CHANGE_COLOR='changeUserColor'
+}

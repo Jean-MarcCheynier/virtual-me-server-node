@@ -52,7 +52,7 @@ export async function signin(req: Request, res: Response) {
         return res.status(OK).json(loggedIn);
       })
       .catch(() => {
-        logger.err('login failed')
+        logger.error('login failed')
         return res.status(UNAUTHORIZED).end();
       })
   } else {

@@ -6,12 +6,6 @@ import axios from 'axios'
 import qs from 'qs';
 import TokenDao from '../daos/Token/TokenDao';
 
-
-axios.interceptors.request.use(request => {
-  console.log('Starting Request', JSON.stringify(request, null, 2))
-  return request
-})
-
 export class SAPCAI {
 
   
@@ -29,11 +23,12 @@ export class SAPCAI {
       url: SAP_CAI_OAUTH_URL
     })
       .then(r => {
+        logger.info("Received SAP CAI API token")
         const tokenDao = new TokenDao();
         tokenDao.setToken(r.data)  
     })
     .catch(e => {
-      logger.err(e)
+      logger.error(e)
     })
   }
   
@@ -60,12 +55,12 @@ export class SAPCAI {
         return APIResponse
       })
       .catch(e => {
-        logger.err(e);
+        logger.error(e);
         const errorMessage: IMessage<string> = new TextMessage("Unable to access the bot");
         return { messages: [errorMessage] }
       })
     } else {
-      logger.err("No bot access token present in DB")
+      logger.error("No bot access token present in DB")
       const errorMessage: IMessage<string> = new TextMessage("Unable to access the bot");
       return { messages: [errorMessage] }
     }

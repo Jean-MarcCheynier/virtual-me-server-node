@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import { paramMissingError } from '@shared/constants';
 
 import UserDao from '@daos/User/UserDao';
+import { IUser } from '@entities/User';
 
 
 
@@ -86,4 +87,17 @@ export async function getMe(req: Request, res: Response) {
     const user: any = req.user
     await userDao.getOne({ _id: user._id });
     return res.status(OK).end();
+}
+
+
+/**
+ * Get connected users.
+ *
+ * @param req
+ * @param res
+ * @returns
+ */
+export async function getConnectedUsers(req: Request, res: Response) {
+    const connectedUsers: IUser[] = await userDao.getConnectedUsers();
+    return res.json(connectedUsers);
 }

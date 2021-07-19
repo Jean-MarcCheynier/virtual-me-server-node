@@ -12,7 +12,7 @@ export interface IUserDocument extends IUser, Document {
 
 export const schema = new Schema<IUserDocument>({
   name: { type: String, required: true },
-  email: { type: String, required: true },
+  email: { type: String, required: false },
   role: { type: Role, default: Role.USER, enum: Role,required: true },
   login: { type: String, unique: true, required: true },
   password: { type: String, required: true },

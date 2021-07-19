@@ -6,6 +6,7 @@ export enum SkillType {
   SOFTWARE = "software",
   METHODOLOGY = "methodology",
   TECHNICAL = "technical",
+  PROGRAMMING = "programming",
 }
 
 export interface ISkill extends ITranslatable {

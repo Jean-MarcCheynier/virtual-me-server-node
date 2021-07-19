@@ -1,5 +1,9 @@
 import { IMessage } from './Message';
 
+
+/**
+ * Response received by the server App from SAP CAI API
+ */
 export interface IResponse {
   results: {
     nlp: any,

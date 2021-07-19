@@ -25,7 +25,7 @@ logger.timestamp = false;
         // Copy back-end files
         await exec('tsc --build tsconfig.prod.json', './')
     } catch (err) {
-        logger.err(err);
+        logger.error(err);
     }
 })();
 

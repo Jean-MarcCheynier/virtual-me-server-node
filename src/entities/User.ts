@@ -1,9 +1,10 @@
 import { Role } from "./Role";
 
-export interface IUserSapCaiSession {
+export interface IUserSession {
     conversation: {
         conversation_id: string;
-    }
+    },
+    socketId?: string
 }
 
 export interface IUser {
@@ -13,7 +14,7 @@ export interface IUser {
     role: Role;
     login: string;
     password?: string;
-    session?: IUserSapCaiSession;
+    session?: IUserSession;
 }
 
 class User implements IUser {
@@ -26,7 +27,7 @@ class User implements IUser {
 
     constructor(
         nameOrUser: string | IUser,
-        role = Role.user,
+        role = Role.USER,
         login: string,
         password: string,
         email?: string

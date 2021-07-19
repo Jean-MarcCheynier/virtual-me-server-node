@@ -1,8 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { Schema, model, Document } from 'mongoose';
-import { IDegree } from '../../entities/Cv/Degree';
-
-
 
 export interface IInfoDocument extends Document {
   name: string;
@@ -17,7 +14,7 @@ export interface IInfoDocument extends Document {
 
 
 export const InfoSchema = new Schema<IInfoDocument>({
-  name: { type: Date, required: true },
+  name: { type: String, required: true },
   surname: { type: String, required: true },
   dateOfBirth: { type: Date },
   nationality: { type: String },
@@ -25,12 +22,12 @@ export const InfoSchema = new Schema<IInfoDocument>({
   contact: {
     email: String,
     phone: [{
+      countryCode: String,
       name: String,
-      number: Number
+      number: String
     }]
     
   },
-  phoneUrl: String,
   address: {
     line1: String,
     line2: String,
@@ -51,4 +48,4 @@ export const InfoSchema = new Schema<IInfoDocument>({
   });
 
 
-export default model<IInfoDocument>('Degree', InfoSchema);
+export default model<IInfoDocument>('Info', InfoSchema);

@@ -8,7 +8,7 @@ export interface IDegreeDocument extends IDegree, Document{}
 
 export const DegreeSchema = new Schema<IDegreeDocument>({
   from: { type: Date, required: true },
-  to: { type: String, required: true },
+  to: { type: Date, required: true },
   school: {
     name: { type: String, required: true },
     type: { type: String, required: true },

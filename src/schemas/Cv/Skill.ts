@@ -14,8 +14,7 @@ export const SkillSchema = new Schema<ISkillDocument>({
   level: { type: LevelEnum },
   type: { type: String, enum: SkillType },
   translation: { type: Map, of: String },
-  I18N: String
 })
 
 
-export default model<ISkillDocument>('Degree', SkillSchema);
+export default model<ISkillDocument>('Skill', SkillSchema);
