@@ -390,6 +390,11 @@
     "@typescript-eslint/types" "4.22.1"
     eslint-visitor-keys "^2.0.0"
 
+"@virtual-me/virtual-me-ts-core@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@virtual-me/virtual-me-ts-core/-/virtual-me-ts-core-1.0.0.tgz#251e07a0bc1c5e09c682afeb7fe40cdd80b3fc87"
+  integrity sha512-Q1YBXym9r1jblwX+aa13MICtV5mq833AB3pvAvzLOz00Rp/QS3k/62l3CMIWuOxqr0yZ3wUade5AL9kyH0DLwQ==
+
 abbrev@1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
