@@ -39,7 +39,7 @@ const loggerFormat = combine(
   format.simple()
 );
 
-const logger: Winston.Logger = Winston.createLogger({
+const logger = createLogger({
   level: 'debug',
   format: loggerFormat,
   transports: [

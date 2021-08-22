@@ -1,8 +1,12 @@
-import { IMessage, Sender, TextMessage, IDialogResponse, DialogResponse } from '@entities/API/bot';
-import { Request } from '@entities/SAP_CAI/Request';
-import { IResponse } from '@entities/SAP_CAI/Response';
+import {
+  IMessage,
+  TextMessage,
+  IDialogRequest,
+  IDialogResponse
+} from '@virtual-me/virtual-me-ts-core';
+
 import logger from '@shared/Logger';
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 import qs from 'qs';
 import TokenDao from '../daos/Token/TokenDao';
 
@@ -23,46 +27,51 @@ export class SAPCAI {
       url: SAP_CAI_OAUTH_URL
     })
       .then(r => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         logger.info("Received SAP CAI API token")
         const tokenDao = new TokenDao();
         tokenDao.setToken(r.data)  
     })
-    .catch(e => {
+    .catch((e: string) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       logger.error(e)
     })
   }
   
-  static async dialog(message: IMessage<any>, conversation_id: string): Promise<IDialogResponse> {
-    const request = new Request(message, conversation_id);
+  static async dialog(message: IMessage<any>, conversation_id: string): Promise<IMessage<any>[]> {
+    const dialogPayload: IDialogRequest = {
+      message,
+      conversation_id
+    }
     const tokenDao = new TokenDao();
     const access = await tokenDao.getToken();
     if (access) {
       const { token_type, access_token } = access;
-      return axios({
+      return axios.request<IDialogResponse>({
         method: 'post',
         headers: {
           'Authorization': `Bearer ${access_token}`,
           'Content-Type': 'application/json',
           'X-token': process.env.XTOKEN
         },
-        data: request,
-        url: process.env.DIALOG_URL
+        data: dialogPayload,
+        url: process.env.DIALOG_URL,
       })
-      .then(r => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        const SAPCAIResponse: IResponse = r.data;
-        const APIResponse: IDialogResponse = DialogResponse.fromSAPCAI(SAPCAIResponse)
-        return APIResponse
+      .then((r: AxiosResponse<IDialogResponse>) => {
+        const messages: IMessage<any>[] = r.data.results.messages;
+        return messages;
       })
       .catch(e => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         logger.error(e);
-        const errorMessage: IMessage<string> = new TextMessage("Unable to access the bot");
-        return { messages: [errorMessage] }
+        const errorMessage: IMessage<any>  = new TextMessage("Unable to access the bot");
+        return [errorMessage]
       })
     } else {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       logger.error("No bot access token present in DB")
-      const errorMessage: IMessage<string> = new TextMessage("Unable to access the bot");
-      return { messages: [errorMessage] }
+      const errorMessage: IMessage<any> = new TextMessage("Unable to access the bot");
+      return [errorMessage]
     }
 
   }
