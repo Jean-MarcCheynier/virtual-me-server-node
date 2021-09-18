@@ -18,7 +18,6 @@ class TokenDao implements ITokenDao {
     return Token.findOne({ ref: REF}).exec()
   }
   public setToken(token: IToken): Promise<any> {
-    logger.info(token);
     return Token.findOneAndUpdate({ ref: REF }, token,
       {
         upsert: true,

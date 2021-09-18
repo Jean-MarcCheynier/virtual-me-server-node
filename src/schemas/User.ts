@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { Schema, model, Document } from 'mongoose';
-import { IUser } from '@entities/User';
-import { Role } from '@entities/Role';
+import { IUser, Role } from '@virtual-me/virtual-me-ts-core';
 import bcrypt from 'bcrypt';
 
 
