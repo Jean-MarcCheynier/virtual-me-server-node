@@ -1,4 +1,4 @@
-import { IUser } from '@entities/User';
+import { IUser } from '@virtual-me/virtual-me-ts-core';
 import User from '../../schemas/User'
 
 

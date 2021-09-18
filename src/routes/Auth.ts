@@ -7,8 +7,7 @@ import jwt from 'jsonwebtoken';
 import UserDao from '@daos/User/UserDao';
 import UserSchema, { IUserDocument } from '../schemas/User'
 import logger from '@shared/Logger';
-import { Role } from '@entities/Role';
-import { IUser } from '@entities/User';
+import { IUser, Role } from '@virtual-me/virtual-me-ts-core';
 
 
 

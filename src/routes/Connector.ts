@@ -4,7 +4,7 @@ import { io } from '@server';
 import UserDao, {IUserDao} from '../daos/User/UserDao';
 import logger from '@shared/Logger';
 import { ActionCode, IActionWebHook } from '@entities/API/webhook';
-import { IUser } from '@entities/User';
+import { IUser } from '@virtual-me/virtual-me-ts-core';
 
 
 /**
@@ -23,10 +23,11 @@ export async function action(req: Request, res: Response) {
   
   logger.debug(`Looking for user with convId ${convId}`)
   
-  const socketId = await userDao.getOne({ 'session.conversation.conversation_id': convId })
+  const socketId: string  | void = await userDao.getOne(
+    { 'session.conversation.conversation_id': convId })
     .then((user: IUser | null) => {
       logger.debug(JSON.stringify(user))
-      return user?.session?.socketId;
+      return user?.session?.socketId as string;
     })
     .catch((e: Error) => {
       logger.error('Could not find user by conversation_id')
