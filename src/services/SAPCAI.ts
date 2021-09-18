@@ -2,7 +2,8 @@ import {
   IMessage,
   TextMessage,
   IDialogRequest,
-  IDialogResponse
+  IDialogResponse,
+  RecipientType
 } from '@virtual-me/virtual-me-ts-core';
 
 import logger from '@shared/Logger';
@@ -58,7 +59,10 @@ export class SAPCAI {
         url: process.env.DIALOG_URL,
       })
       .then((r: AxiosResponse<IDialogResponse>) => {
-        const messages: IMessage<any>[] = r.data.results.messages;
+        const messages: IMessage<any>[] = r.data.results.messages.map(message => {
+          message.from = { type: RecipientType.BOT };
+          return message
+        });
         return messages;
       })
       .catch(e => {
