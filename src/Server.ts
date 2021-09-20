@@ -21,7 +21,7 @@ import { Strategy, ExtractJwt } from 'passport-jwt'
 import baseRouter, { authRouter, connectorRouter } from './routes';
 import logger from '@shared/Logger';
 import UserDao, { IUserDao } from './daos/User/UserDao';
-import { IUser } from './entities/User';
+import { IUser } from '@virtual-me/virtual-me-ts-core';
 import { SAPCAI } from './services/SAPCAI';
 
 const app = express();
@@ -41,7 +41,7 @@ const dbOptions = {
     useCreateIndex: true,
     useFindAndModify: false
 }
-logger.info('The value of PORT is:' + process.env.MONGO_URI);
+
 const mongoURI: string = process.env.MONGO_URI || "";
 mongoose.connect(mongoURI, dbOptions)
 const db = mongoose.connection

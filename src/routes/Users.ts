@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { paramMissingError } from '@shared/constants';
 
 import UserDao from '@daos/User/UserDao';
-import { IUser } from '@entities/User';
+import { IUser } from '@virtual-me/virtual-me-ts-core';
 
 
 

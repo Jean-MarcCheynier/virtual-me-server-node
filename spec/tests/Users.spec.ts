@@ -1,4 +1,4 @@
-import supertest from 'supertest';
+/* import supertest from 'supertest';
 import StatusCodes from 'http-status-codes';
 import { SuperTest, Test } from 'supertest';
 
@@ -208,3 +208,4 @@ describe('Users Routes', () => {
         });
     });
 });
+ */
