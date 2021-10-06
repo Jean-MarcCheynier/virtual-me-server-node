@@ -18,6 +18,7 @@ authRouter.post('/signup', signup);
 // SAP CAI COnnector Router
 export const connectorRouter = Router();
 connectorRouter.post('/action', action);
+connectorRouter.get('/cv', getAllCv);
 
 // User-route
 const userRouter = Router();
