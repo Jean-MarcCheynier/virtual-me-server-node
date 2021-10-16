@@ -64,6 +64,7 @@ passport.use(new Strategy({
     jwtFromRequest: (request: any) => {
         // Case request from http
         let token = ExtractJwt.fromAuthHeaderWithScheme('bearer')(request)
+        logger.debug("search token")
         if (token) {
             return token;
         }
@@ -100,12 +101,17 @@ const options = {
 };
 export const io = new Server(httpServer, options);
 io.use((socket: any, next) => {
-    logger.debug("socket")
+    logger.debug("socket");
     if (socket.handshake && socket.handshake.auth) {
+        logger.debug("handshake");
+        logger.debug(JSON.stringify(socket.handshake));
         socket.request.auth = socket.handshake.auth;
+    } else {
+        logger.debug("handshake failed");
     }
     next()
 })
+io.use((socket, next) => { console.log("pass"); next(); });
 io.use(wrap(passport.initialize()));
 io.use(wrap(passport.authenticate('jwt', { session: false })));
 io.use((socket: any, next) => {

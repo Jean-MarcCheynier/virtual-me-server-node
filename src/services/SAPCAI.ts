@@ -39,10 +39,16 @@ export class SAPCAI {
     })
   }
   
-  static async dialog(message: IMessage<any>, conversation_id: string): Promise<IMessage<any>[]> {
+  static async dialog(
+    message: IMessage<any>,
+    conversation_id: string,
+    language?: string): Promise<IMessage<any>[]> {
     const dialogPayload: IDialogRequest = {
       message,
-      conversation_id
+      conversation_id,
+    }
+    if (language) {
+      dialogPayload.language = language;
     }
     const tokenDao = new TokenDao();
     const access = await tokenDao.getToken();
