@@ -67,10 +67,12 @@ passport.use(new Strategy({
         logger.debug("search token")
         if (token) {
             return token;
-        }
-        // Case request from ws
-        token = request.auth.token;
+        }else {
+            token = request?.auth?.token;
+            // Case request from ws
             return token
+        }
+
     },
     secretOrKey: process.env.JWT_SECRET
     // audience = 'yoursite.net';
@@ -111,7 +113,6 @@ io.use((socket: any, next) => {
     }
     next()
 })
-io.use((socket, next) => { console.log("pass"); next(); });
 io.use(wrap(passport.initialize()));
 io.use(wrap(passport.authenticate('jwt', { session: false })));
 io.use((socket: any, next) => {
@@ -127,8 +128,8 @@ io.use((socket: any, next) => {
 io.on("connection", (socket: any) => {
     const user: IUser = socket.request.user;
     const socketId = socket.id;
-    logger.info(socketId),
-        userDao.updateSocketId(user, socketId)
+    logger.info(socketId);
+    userDao.updateSocketId(user, socketId)
     //Remove socketId on disconnect
     socket.on('disconnect', function (socket: any) {
         const socketId: string = socket.id
