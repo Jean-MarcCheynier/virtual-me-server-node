@@ -39,6 +39,7 @@ cvRouter.get('/', getAllCv);
 cvRouter.get('/:id', getCv);
 cvRouter.post('/', addCv);
 cvRouter.put('/:id', updateCv);
+cvRouter.delete('/:id', deleteCv);
 
 
 // Export the base-router

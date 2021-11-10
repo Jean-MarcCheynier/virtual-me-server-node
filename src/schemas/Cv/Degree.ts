@@ -1,18 +1,25 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { Schema, model, Document } from 'mongoose';
-import { IDegree } from '../../entities/Cv/Degree';
+import { IDegree } from '@virtual-me/virtual-me-ts-core';
 
 
 
 export interface IDegreeDocument extends IDegree, Document{}
 
 export const DegreeSchema = new Schema<IDegreeDocument>({
-  from: { type: Date, required: true },
-  to: { type: Date, required: true },
+  title: {
+    translation: { type: Map, of: String },
+  },
+  description: {
+    translation: { type: Map, of: String },
+  },
+  date: { type: Date, required: true },
   school: {
+    logo: { type: String },
+    link: { type: String },
     name: { type: String, required: true },
     type: { type: String, required: true },
-    translation: Schema.Types.Mixed,
+    translation: { type: Map, of: String },
     address: {
       line1: String,
       line2: String,

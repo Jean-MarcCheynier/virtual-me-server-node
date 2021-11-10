@@ -66,8 +66,10 @@ passport.use(new Strategy({
         let token = ExtractJwt.fromAuthHeaderWithScheme('bearer')(request)
         logger.debug("search token")
         if (token) {
+            logger.debug("token from header")
             return token;
-        }else {
+        } else {
+            logger.debug("token from req")
             token = request?.auth?.token;
             // Case request from ws
             return token

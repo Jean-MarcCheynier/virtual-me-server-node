@@ -58,7 +58,7 @@ export async function addCv(req: Request, res: Response) {
  */
 export async function updateCv(req: Request, res: Response) {
   const { cv } = req.body;
-  
+
   if (!cv) {
     return res.status(BAD_REQUEST).json({
       error: paramMissingError,
@@ -84,6 +84,6 @@ export async function updateCv(req: Request, res: Response) {
  */
 export async function deleteCv(req: Request, res: Response) {
   const { id } = req.params;
-  await cvDao.delete(Number(id));
+  await cvDao.delete(id);
   return res.status(OK).end();
 }
