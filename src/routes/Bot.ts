@@ -22,6 +22,7 @@ export async function dialog(req: Request, res: Response) {
   if (user && user.session && user.session.conversation) {
     const { conversation_id } = user.session.conversation
     const response = await SAPCAI.dialog(message, conversation_id, language);
+    console.log("RESPONSE");
     console.log(response);
     res.status(OK).json(response);
   } else {
