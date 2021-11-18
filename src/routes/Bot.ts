@@ -17,12 +17,11 @@ const { BAD_REQUEST, CREATED, OK, FORBIDDEN } = StatusCodes;
  * @returns 
  */
 export async function dialog(req: Request, res: Response) {
-  const { message } = req.body;
+  const { message, language } = req.body;
   const user: any = req.user;
   if (user && user.session && user.session.conversation) {
     const { conversation_id } = user.session.conversation
-    const response = await SAPCAI.dialog(message, conversation_id);
-    console.log(response);
+    const response = await SAPCAI.dialog(message, conversation_id, language);
     res.status(OK).json(response);
   } else {
     res.status(FORBIDDEN).end();

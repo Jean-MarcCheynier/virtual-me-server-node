@@ -15,5 +15,6 @@ export interface IWebHookResponseBody {
 }
 
 export enum ActionCode {
-  CHANGE_COLOR='changeUserColor'
+  CHANGE_COLOR = 'changeUserColor',
+  CHANGE_LANG = 'changeLang',
 }

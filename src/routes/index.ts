@@ -38,7 +38,8 @@ const cvRouter = Router();
 cvRouter.get('/', getAllCv);
 cvRouter.get('/:id', getCv);
 cvRouter.post('/', addCv);
-cvRouter.put('/', updateCv);
+cvRouter.put('/:id', updateCv);
+cvRouter.delete('/:id', deleteCv);
 
 
 // Export the base-router

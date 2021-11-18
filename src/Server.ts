@@ -64,12 +64,17 @@ passport.use(new Strategy({
     jwtFromRequest: (request: any) => {
         // Case request from http
         let token = ExtractJwt.fromAuthHeaderWithScheme('bearer')(request)
+        logger.debug("search token")
         if (token) {
+            logger.debug("token from header")
             return token;
-        }
-        // Case request from ws
-        token = request.auth.token;
+        } else {
+            logger.debug("token from req")
+            token = request?.auth?.token;
+            // Case request from ws
             return token
+        }
+
     },
     secretOrKey: process.env.JWT_SECRET
     // audience = 'yoursite.net';
@@ -100,9 +105,13 @@ const options = {
 };
 export const io = new Server(httpServer, options);
 io.use((socket: any, next) => {
-    logger.debug("socket")
+    logger.debug("socket");
     if (socket.handshake && socket.handshake.auth) {
+        logger.debug("handshake");
+        logger.debug(JSON.stringify(socket.handshake));
         socket.request.auth = socket.handshake.auth;
+    } else {
+        logger.debug("handshake failed");
     }
     next()
 })
@@ -121,8 +130,8 @@ io.use((socket: any, next) => {
 io.on("connection", (socket: any) => {
     const user: IUser = socket.request.user;
     const socketId = socket.id;
-    logger.info(socketId),
-        userDao.updateSocketId(user, socketId)
+    logger.info(socketId);
+    userDao.updateSocketId(user, socketId)
     //Remove socketId on disconnect
     socket.on('disconnect', function (socket: any) {
         const socketId: string = socket.id

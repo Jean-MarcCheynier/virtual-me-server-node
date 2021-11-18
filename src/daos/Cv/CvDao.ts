@@ -1,5 +1,5 @@
 import Cv, { ICvDocument } from '../../schemas/Cv/Cv';
-import { ICv } from '../../entities/Cv/Cv';
+import { ICv } from '@virtual-me/virtual-me-ts-core';
 
 
 

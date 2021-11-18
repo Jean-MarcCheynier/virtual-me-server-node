@@ -35,14 +35,12 @@ export async function action(req: Request, res: Response) {
 
   
   switch (actionCode) {
-    case ActionCode.CHANGE_COLOR:
+    default:
       if (socketId) {
-        logger.debug(`Sending ${ActionCode.CHANGE_COLOR}`)
-        io.to(socketId).emit(ActionCode.CHANGE_COLOR, content);
+        logger.debug(`Sending ${actionCode}`)
+        io.to(socketId).emit(actionCode, content);
       }
       res.json({ "replies": [] })
       break;
-    default:
-      break
   }
 }
