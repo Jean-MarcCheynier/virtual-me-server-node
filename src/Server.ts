@@ -23,6 +23,7 @@ import logger from '@shared/Logger';
 import UserDao, { IUserDao } from './daos/User/UserDao';
 import { IUser } from '@virtual-me/virtual-me-ts-core';
 import { SAPCAI } from './services/SAPCAI';
+import { testRouter } from './routes/index';
 
 const app = express();
 const httpServer = createServer(app);
@@ -161,6 +162,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // Add APIs
+app.use('/test', testRouter)
 app.use('/api/auth', authRouter)
 app.use('/api/connector', connectorRouter)
 app.all('/api/*', passport.authenticate('jwt', { session: false }))

@@ -10,6 +10,10 @@ import { getCv, getAllCv, updateCv, deleteCv, addCv } from './Cv';
 import { dialog } from './Bot';
 import { action } from './Connector';
 
+//Test
+export const testRouter = Router();
+testRouter.get('/', (req, res) => res.send("test"));
+
 // Auth route
 export const authRouter = Router();
 authRouter.post('/signin', signin);
