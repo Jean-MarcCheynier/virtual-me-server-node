@@ -21,7 +21,7 @@ logger.timestamp = false;
         //await copy('./src/public', './dist/public');
         //await copy('./src/views', './dist/views');
         // Copy production env file
-        await copy('./src/pre-start/env/production.env', './dist/pre-start/env/production.env');
+        //await copy('./src/pre-start/env/production.env', './dist/pre-start/env/production.env');
         // Copy back-end files
         await exec('tsc --build tsconfig.prod.json', './')
     } catch (err) {
