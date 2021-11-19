@@ -9,7 +9,7 @@ import commandLineArgs from 'command-line-args';
 
 
 
-(() => {
+/* (() => {
     // Setup command line options
     const options = commandLineArgs([
         {
@@ -26,4 +26,4 @@ import commandLineArgs from 'command-line-args';
     if (result2.error) {
         throw result2.error;
     }
-})();
+})(); */
