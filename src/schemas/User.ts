@@ -15,6 +15,16 @@ export const schema = new Schema<IUserDocument>({
   role: { type: Role, default: Role.USER, enum: Role,required: true },
   login: { type: String, unique: true, required: true },
   password: { type: String, required: true },
+  profile: {
+    github: {
+      id: String,
+      displayName: String,
+      username: String,
+      profileUrl: String,
+      photos: [{ value: String }],
+      provider: String
+    }
+  },
   session: { type: Schema.Types.Mixed, required: false }
 },
 {

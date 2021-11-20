@@ -85,8 +85,10 @@ export async function deleteOneUser(req: Request, res: Response) {
  */
 export async function getMe(req: Request, res: Response) {
     const user: any = req.user
-    await userDao.getOne({ _id: user._id });
-    return res.status(OK).end();
+    console.log("Getting user");
+    const me = await userDao.getOne({ _id: user._id });
+    console.log(user.username);
+    return res.json(me);
 }
 
 

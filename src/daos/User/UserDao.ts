@@ -1,4 +1,5 @@
 import { IUser } from '@virtual-me/virtual-me-ts-core';
+import { randomPassword, upper, lower, digits } from 'secure-random-password'
 import User from '../../schemas/User'
 
 
@@ -6,6 +7,7 @@ import User from '../../schemas/User'
 export interface IUserDao {
     getOne: (query: any) => Promise<IUser | null>;
     getAll: () => Promise<IUser[]>;
+    signinWithGithub: (githubProfile: any) => Promise<IUser>;
     add: (user: IUser) => Promise<IUser | null>;
     update: (user: IUser) => Promise<IUser | null>;
     updateSocketId: (user: IUser, socketId: string) => Promise<IUser | null>;
@@ -62,6 +64,43 @@ class UserDao implements IUserDao {
     */
     public async updateSocketId(user: IUser, socketId: string): Promise<any | null> {
         return User.updateOne({ _id: user._id }, { $set: { 'session.socketId': socketId } }).exec()
+    }
+    
+    
+    /**
+    * Takes a github profile and create/find the associated user in virtual-me' database.
+    * @param githubProfile
+    * @return valid jwt token for the user
+    */
+    public async signinWithGithub(githubProfile: any): Promise<any | null> {
+        const { id, displayName, username, profileUrl, photos, provider } = githubProfile;
+        return User.findOne({ "profile.github.id": id})
+            .then((r) => {
+                if (r) {
+                    return r 
+                } else {
+                    console.log("Not found -> should register in db and return token");
+                    //Generate arbitrary password : 
+                    const password: string = randomPassword({
+                        characters: [lower, upper, digits]
+                    })
+                    const newUser = new User({
+                        name: username,
+                        login: username,
+                        password: password,
+                        profile: {
+                            github: githubProfile
+                        }
+                    });
+                    newUser.save();
+                    return newUser
+                }
+
+            })
+            .catch(e => {
+                return false
+            })
+
     }
     
     
