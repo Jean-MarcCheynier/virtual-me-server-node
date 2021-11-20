@@ -9,6 +9,8 @@ import {
 import { getCv, getAllCv, updateCv, deleteCv, addCv } from './Cv';
 import { dialog } from './Bot';
 import { action } from './Connector';
+import passport from 'passport';
+import { githubAuthSuccess } from './Auth';
 
 //Test
 export const testRouter = Router();
@@ -18,6 +20,10 @@ testRouter.get('/', (req, res) => res.send("test"));
 export const authRouter = Router();
 authRouter.post('/signin', signin);
 authRouter.post('/signup', signup);
+authRouter.get('/github', passport.authenticate('github'));
+authRouter.get('/github/callback',
+  passport.authenticate('github', { assignProperty: 'user' }),
+  githubAuthSuccess);
 
 // SAP CAI COnnector Router
 export const connectorRouter = Router();

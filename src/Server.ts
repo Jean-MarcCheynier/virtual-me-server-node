@@ -17,6 +17,8 @@ import 'express-async-errors';
 
 import  passport from 'passport'
 import { Strategy, ExtractJwt } from 'passport-jwt'
+import passportGithub from 'passport-github';
+import OAuth2Strategy from 'passport-oauth2'
 
 import baseRouter, { authRouter, connectorRouter } from './routes';
 import logger from '@shared/Logger';
@@ -24,6 +26,7 @@ import UserDao, { IUserDao } from './daos/User/UserDao';
 import { IUser } from '@virtual-me/virtual-me-ts-core';
 import { SAPCAI } from './services/SAPCAI';
 import { testRouter } from './routes/index';
+import User, { IUserDocument } from './schemas/User';
 
 const app = express();
 const httpServer = createServer(app);
@@ -90,7 +93,24 @@ passport.use(new Strategy({
             done(error)
             return false
         })
-}))
+    }))
+
+passport.use(new passportGithub.Strategy({
+        clientID: process.env.GITHUB_CLIENT_ID || "",
+        clientSecret: process.env.GITHUB_CLIENT_SECRET || "",
+        callbackURL: process.env.GITHUB_CALLBACK_URL || ""
+    },
+    (accessToken, refreshToken, profile, cb) => {
+        console.log("PASSPORT STRATEGY");
+        const { id, displayName, username, profileUrl, photos, provider } = profile;
+        userDao.signinWithGithub(profile)
+            .then((user) => {
+                console.log("DONE");
+                console.log(user);
+                cb(null, user)
+            })
+    }
+));
 
 /************************************************************************************
  *                              Set Socket.io Config
