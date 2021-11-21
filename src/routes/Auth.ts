@@ -15,8 +15,6 @@ import { IUser, Role } from '@virtual-me/virtual-me-ts-core';
 const userDao = new UserDao();
 const { BAD_REQUEST, CREATED, OK, UNAUTHORIZED } = StatusCodes;
 
-
-
 /**
  * signin
  * 
@@ -83,4 +81,34 @@ export async function signup(req: Request, res: Response) {
   } else {
     return res.status(UNAUTHORIZED).end();
   }
+}
+
+/**
+ * signin
+ * 
+ * @param req 
+ * @param res 
+ * @returns 
+ */
+export function githubAuthSuccess(req: any, res: Response) {
+  // Should check the code 
+  const code = req?.params?.code;
+  console.log("Callback code");
+  console.log(code);
+  const user: IUserDocument = req.user;
+  console.log('User');
+  console.log(user)
+  if (!user.session || !user.session.conversation) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+    const conversation_id: string = uuidv4()
+    user.session = { ...user.session, conversation: { conversation_id: conversation_id } }
+    user.save();
+  }
+  const JWTSecret: string = process.env.JWT_SECRET || 'oh-my'
+  const token = jwt.sign(user.toObject(), JWTSecret, { expiresIn: '10d' })
+  const loggedIn: any = user.toJSON()
+  loggedIn.jwt = token
+  loggedIn.signedIn = new Date()
+  const urlRedirect: string = process.env.CLIENT_REDIRECT_SIGNIN+"?token="+token;
+  return res.redirect(urlRedirect);
 }
