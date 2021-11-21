@@ -79,7 +79,6 @@ class UserDao implements IUserDao {
                 if (r) {
                     return r 
                 } else {
-                    console.log("Not found -> should register in db and return token");
                     //Generate arbitrary password : 
                     const password: string = randomPassword({
                         characters: [lower, upper, digits]
@@ -103,9 +102,6 @@ class UserDao implements IUserDao {
 
     }
     
-    
-
-
     /**
      *
      * @param id

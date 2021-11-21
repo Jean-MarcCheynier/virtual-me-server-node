@@ -100,12 +100,9 @@ passport.use(new passportGithub.Strategy({
         callbackURL: process.env.GITHUB_CALLBACK_URL || ""
     },
     (accessToken, refreshToken, profile, cb) => {
-        console.log("PASSPORT STRATEGY");
         const { id, displayName, username, profileUrl, photos, provider } = profile;
         userDao.signinWithGithub(profile)
             .then((user) => {
-                console.log("DONE");
-                console.log(user);
                 cb(null, user)
             })
     }
