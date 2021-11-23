@@ -16,14 +16,7 @@ export const schema = new Schema<IUserDocument>({
   login: { type: String, unique: true, required: true },
   password: { type: String, required: true },
   profile: {
-    github: {
-      id: String,
-      displayName: String,
-      username: String,
-      profileUrl: String,
-      photos: [{ value: String }],
-      provider: String
-    }
+    github: { type: {}, required: false },
   },
   session: { type: Schema.Types.Mixed, required: false }
 },

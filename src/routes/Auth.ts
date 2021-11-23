@@ -93,11 +93,7 @@ export async function signup(req: Request, res: Response) {
 export function githubAuthSuccess(req: any, res: Response) {
   // Should check the code 
   const code = req?.params?.code;
-  console.log("Callback code");
-  console.log(code);
   const user: IUserDocument = req.user;
-  console.log('User');
-  console.log(user)
   if (!user.session || !user.session.conversation) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     const conversation_id: string = uuidv4()
