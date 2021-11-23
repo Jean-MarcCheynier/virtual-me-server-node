@@ -1,2 +1,6 @@
 node_modules
 info.log
+dist
+src/pre-start/env/development.env
+src/pre-start/env/production.env
+src/pre-start/env/test.env

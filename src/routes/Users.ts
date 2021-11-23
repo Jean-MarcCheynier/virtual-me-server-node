@@ -77,7 +77,7 @@ export async function deleteOneUser(req: Request, res: Response) {
 }
 
 /**
- * Get connected user.
+ * Get connected user based on api token
  *
  * @param req
  * @param res
@@ -85,9 +85,8 @@ export async function deleteOneUser(req: Request, res: Response) {
  */
 export async function getMe(req: Request, res: Response) {
     const user: any = req.user
-    console.log("Getting user");
     const me = await userDao.getOne({ _id: user._id });
-    console.log(user.username);
+    console.log(JSON.stringify(me))
     return res.json(me);
 }
 

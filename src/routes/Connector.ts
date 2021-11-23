@@ -26,7 +26,7 @@ export async function action(req: Request, res: Response) {
   const socketId: string  | void = await userDao.getOne(
     { 'session.conversation.conversation_id': convId })
     .then((user: IUser | null) => {
-      logger.debug(JSON.stringify(user))
+      //logger.debug(JSON.stringify(user))
       return user?.session?.socketId as string;
     })
     .catch((e: Error) => {

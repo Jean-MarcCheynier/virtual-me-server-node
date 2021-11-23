@@ -68,12 +68,9 @@ passport.use(new Strategy({
     jwtFromRequest: (request: any) => {
         // Case request from http
         let token = ExtractJwt.fromAuthHeaderWithScheme('bearer')(request)
-        logger.debug("search token")
         if (token) {
-            logger.debug("token from header")
             return token;
         } else {
-            logger.debug("token from req")
             token = request?.auth?.token;
             // Case request from ws
             return token
@@ -101,12 +98,9 @@ passport.use(new passportGithub.Strategy({
         callbackURL: process.env.GITHUB_CALLBACK_URL || ""
     },
     (accessToken, refreshToken, profile, cb) => {
-        console.log("PASSPORT STRATEGY");
         const { id, displayName, username, profileUrl, photos, provider } = profile;
         userDao.signinWithGithub(profile)
             .then((user) => {
-                console.log("DONE");
-                console.log(user);
                 cb(null, user)
             })
     }
@@ -128,11 +122,9 @@ export const io = new Server(httpServer, options);
 io.use((socket: any, next) => {
     logger.debug("socket");
     if (socket.handshake && socket.handshake.auth) {
-        logger.debug("handshake");
-        logger.debug(JSON.stringify(socket.handshake));
         socket.request.auth = socket.handshake.auth;
     } else {
-        logger.debug("handshake failed");
+        logger.error("handshake failed");
     }
     next()
 })
