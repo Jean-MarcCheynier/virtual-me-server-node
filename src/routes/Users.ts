@@ -86,6 +86,7 @@ export async function deleteOneUser(req: Request, res: Response) {
 export async function getMe(req: Request, res: Response) {
     const user: any = req.user
     const me = await userDao.getOne({ _id: user._id });
+    console.log(JSON.stringify(me))
     return res.json(me);
 }
 

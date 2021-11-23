@@ -74,7 +74,7 @@ class UserDao implements IUserDao {
     */
     public async signinWithGithub(githubProfile: any): Promise<any | null> {
         const { id, displayName, username, profileUrl, photos, provider } = githubProfile;
-        return User.findOne({ "profile.github.id": id})
+        const user = await User.findOne({ "profile.github.id": id})
             .then((r) => {
                 if (r) {
                     return r 
@@ -88,7 +88,14 @@ class UserDao implements IUserDao {
                         login: username,
                         password: password,
                         profile: {
-                            github: githubProfile
+                            github: {
+                                id,
+                                displayName,
+                                username,
+                                profileUrl,
+                                photos,
+                                provider
+                            }
                         }
                     });
                     newUser.save();
@@ -99,6 +106,7 @@ class UserDao implements IUserDao {
             .catch(e => {
                 return false
             })
+        return user;
 
     }
     
