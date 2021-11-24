@@ -31,7 +31,7 @@ export const ExperienceSchema = new Schema<IExperienceDocument>({
     country: String,
     countryCode: String
   },
-  skills: [Schema.Types.ObjectId]
+  skills: [String]
 },
 {
   timestamps: {
