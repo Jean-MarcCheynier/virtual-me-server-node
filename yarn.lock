@@ -427,10 +427,12 @@
     "@typescript-eslint/types" "4.22.1"
     eslint-visitor-keys "^2.0.0"
 
-"@virtual-me/virtual-me-ts-core@^1.0.24":
-  version "1.0.24"
-  resolved "https://registry.yarnpkg.com/@virtual-me/virtual-me-ts-core/-/virtual-me-ts-core-1.0.24.tgz#8577ac193f2e6fc07015b8d626a6ef08c17b8bf4"
-  integrity sha512-l5J5Ii5HQMYdsp2e4SP0Qe93pZX1AiFPjrdKZM4ZdwHKhxmuWeXQoG86kv34O26/118Mw3EnIFZmX1bMIEjQIQ==
+"@virtual-me/virtual-me-ts-core@^1.0.30":
+  version "1.0.30"
+  resolved "https://registry.yarnpkg.com/@virtual-me/virtual-me-ts-core/-/virtual-me-ts-core-1.0.30.tgz#153ea33037e7998b06bd01f2d9732463ffee8132"
+  integrity sha512-Gvr04kH2IcgoPPFEav1MmJceuR6S+BpGJuvDD84+/uDh0PMEEec6Va1oE/9VBd2dchxajT26FHaU5lurVPE9iw==
+  dependencies:
+    intl "^1.2.5"
 
 abbrev@1:
   version "1.1.1"
@@ -1770,6 +1772,11 @@ ini@~1.3.0:
   version "1.3.8"
   resolved "https://registry.yarnpkg.com/ini/-/ini-1.3.8.tgz#a29da425b48806f34767a4efce397269af28432c"
   integrity sha512-JV/yugV2uzW5iMRSiZAyDtQd+nxtUnjeLt0acNdw98kKLrvuRVyB80tsREOE7yvGVgalhZ6RNXCmEHkUKBKxew==
+
+intl@^1.2.5:
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/intl/-/intl-1.2.5.tgz#82244a2190c4e419f8371f5aa34daa3420e2abde"
+  integrity sha1-giRKIZDE5Bn4Nx9ao02qNCDiq94=
 
 ipaddr.js@1.9.1:
   version "1.9.1"
