@@ -11,6 +11,8 @@ export interface IUserDao {
     add: (user: IUser) => Promise<IUser | null>;
     update: (user: IUser) => Promise<IUser | null>;
     updateSocketId: (user: IUser, socketId: string) => Promise<IUser | null>;
+    updatePreferredLang: (user: IUser, lang: string) => Promise<IUser | null>;
+    updatePreferredColor: (user: IUser, color: string) => Promise<IUser | null>;
     delete: (id: string) => Promise<any>;
 }
 
@@ -64,6 +66,22 @@ class UserDao implements IUserDao {
     */
     public async updateSocketId(user: IUser, socketId: string): Promise<any | null> {
         return User.updateOne({ _id: user._id }, { $set: { 'session.socketId': socketId } }).exec()
+    }
+    
+    /**
+    *
+    * @param user
+    */
+    public async updatePreferredLang(user: IUser, lang: string): Promise<any | null> {
+        return User.updateOne({ _id: user._id }, { $set: { 'session.lang': lang } }).exec()
+    }
+    
+    /**
+    *
+    * @param user
+    */
+    public async updatePreferredColor(user: IUser, color: string): Promise<any | null> {
+        return User.updateOne({ _id: user._id }, { $set: { 'session.color': color } }).exec()
     }
     
     

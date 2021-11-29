@@ -162,3 +162,19 @@
 [31merror[39m: E11000 duplicate key error collection: virtual-me.users index: profile.github_1 dup key: { profile.github: null } {"driver":true,"name":"MongoError","index":0,"code":11000,"keyPattern":{"profile.github":1},"keyValue":{"profile.github":null}}
 [31merror[39m: E11000 duplicate key error collection: virtual-me.users index: profile.github_1 dup key: { profile.github: null } {"driver":true,"name":"MongoError","index":0,"code":11000,"keyPattern":{"profile.github":1},"keyValue":{"profile.github":null}}
 [31merror[39m: E11000 duplicate key error collection: virtual-me.users index: profile.github_1 dup key: { profile.github: null } {"driver":true,"name":"MongoError","index":0,"code":11000,"keyPattern":{"profile.github":1},"keyValue":{"profile.github":null}}
+[31merror[39m: Unexpected token } in JSON at position 90 {"expose":true,"statusCode":400,"status":400,"body":"{\n\t\"convId\":\"928bfa6d-a241-4025-a8ab-5bb4b5a55094\",\n\t\"actionCode\":\"openPage\",\n\t\"content\":\n}","type":"entity.parse.failed"}
+[31merror[39m: Unexpected token } in JSON at position 90 {"expose":true,"statusCode":400,"status":400,"body":"{\n\t\"convId\":\"928bfa6d-a241-4025-a8ab-5bb4b5a55094\",\n\t\"actionCode\":\"openPage\",\n\t\"content\":\n}","type":"entity.parse.failed"}
+[31merror[39m: Unexpected token } in JSON at position 90 {"expose":true,"statusCode":400,"status":400,"body":"{\n\t\"convId\":\"928bfa6d-a241-4025-a8ab-5bb4b5a55094\",\n\t\"actionCode\":\"openPage\",\n\t\"content\":\n}","type":"entity.parse.failed"}
+[31merror[39m: Unexpected token } in JSON at position 90 {"expose":true,"statusCode":400,"status":400,"body":"{\n\t\"convId\":\"928bfa6d-a241-4025-a8ab-5bb4b5a55094\",\n\t\"actionCode\":\"openPage\",\n\t\"content\":\n}","type":"entity.parse.failed"}
+[31merror[39m: Operation `users.findOne()` buffering timed out after 10000ms
+[31merror[39m: connection error:
+[31merror[39m: Operation `users.findOne()` buffering timed out after 10000ms
+[31merror[39m: Unexpected token } in JSON at position 90 {"expose":true,"statusCode":400,"status":400,"body":"{\n\t\"convId\":\"928bfa6d-a241-4025-a8ab-5bb4b5a55094\",\n\t\"actionCode\":\"openPage\",\n\t\"content\":\n}","type":"entity.parse.failed"}
+[31merror[39m: Unexpected token } in JSON at position 90 {"expose":true,"statusCode":400,"status":400,"body":"{\n\t\"convId\":\"928bfa6d-a241-4025-a8ab-5bb4b5a55094\",\n\t\"actionCode\":\"openPage\",\n\t\"content\":\n}","type":"entity.parse.failed"}
+[31merror[39m: Cannot set headers after they are sent to the client {"code":"ERR_HTTP_HEADERS_SENT"}
+[31merror[39m: Unexpected token } in JSON at position 72 {"expose":true,"statusCode":400,"status":400,"body":"{\n\t\"convId\":\"test-1638224079369\",\n\t\"actionCode\":\"openPage\",\n\t\"content\":\n}","type":"entity.parse.failed"}
+[31merror[39m: Unexpected token } in JSON at position 72 {"expose":true,"statusCode":400,"status":400,"body":"{\n\t\"convId\":\"test-1638224079369\",\n\t\"actionCode\":\"openPage\",\n\t\"content\":\n}","type":"entity.parse.failed"}
+[31merror[39m: Cannot set headers after they are sent to the client {"code":"ERR_HTTP_HEADERS_SENT"}
+[31merror[39m: Cannot set headers after they are sent to the client {"code":"ERR_HTTP_HEADERS_SENT"}
+[31merror[39m: Unexpected token } in JSON at position 90 {"expose":true,"statusCode":400,"status":400,"body":"{\n\t\"convId\":\"928bfa6d-a241-4025-a8ab-5bb4b5a55094\",\n\t\"actionCode\":\"openPage\",\n\t\"content\":\n}","type":"entity.parse.failed"}
+[31merror[39m: Unexpected token } in JSON at position 90 {"expose":true,"statusCode":400,"status":400,"body":"{\n\t\"convId\":\"928bfa6d-a241-4025-a8ab-5bb4b5a55094\",\n\t\"actionCode\":\"openPage\",\n\t\"content\":\n}","type":"entity.parse.failed"}
