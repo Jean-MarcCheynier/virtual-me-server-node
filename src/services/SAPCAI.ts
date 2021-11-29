@@ -67,6 +67,7 @@ export class SAPCAI {
       .then((r: AxiosResponse<IDialogResponse>) => {
         const messages: IMessage<any>[] = r.data.results.messages.map(message => {
           message.from = { type: RecipientType.BOT };
+          message.lang = r.data.results.conversation.language;
           return message
         });
         return messages;
